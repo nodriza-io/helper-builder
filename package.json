@@ -2,7 +2,7 @@
   "name": "nodriza-io-cli",
   "version": "1.0.0",
   "description": "nodriza-io-cli",
-  "main": "index.js",
+  "main": "dist/bundle.js",
   "scripts": {
     "dev": "nodemon --watch src src/server.ts",
     "type-check": "tsc --noEmit",
