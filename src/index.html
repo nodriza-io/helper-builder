@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <link rel="stylesheet" href="jquery.json-viewer.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Maven Pro&display=swap');
+    #grid {
+      display: grid;
+      height: 100vh;
+      grid-template-columns: 360px auto 1fr;
+      position: fixed;
+      overflow: hidden;
+      width: 100%;
+      margin: auto;
+    }
+    #sidebar, #sidebar * {
+      font-size: 16px;
+      font-family: 'Maven Pro', sans-serif !important;
+      color: white !important;
+      background: black;
+    }
+    #sidebar hr {
+      border-color: #5a5a5a;
+      width: 90%;
+    }
+    #sidebar .form-group {
+      display: grid;
+      padding: 5px 20px;
+      align-items: baseline;
+      grid-template-columns: 60px 1fr;
+    }
+    #sidebar .form-control {
+      height: 3rem;
+      border: 1px solid #2e2e2e !important;
+      padding: 10px;
+      border-radius: 0;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      line-height: 1rem;
+      font-size: 16px;
+    }
+    #sidebar input, #sidebar select, #sidebar label {
+      display: inline-block;
+    }
+    #sidebar label {
+      text-align: right;
+      padding-right: 10px;
+    }
+    #sidebar .logo {
+      width: 80%;
+      display: block;
+      margin: auto;
+      margin-top: 50px;
+      margin-bottom: 5px;
+    }
+    #sidebar .slogan {
+      display: block;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    #viewer {
+      overflow: auto;
+      width: 1168px;
+      height: 100vh;
+    }
+    #viewer .trumbowyg-editor {
+      display: none;
+    }
+    #viewer .trumbowyg-editor.viewer {
+      display: block;
+    }
+    #json-renderer {
+      background-color: white;
+      border-right: 5px solid #e2e2e2;
+      cursor: col-resize;
+      height: 100vh !important;
+    }
+  </style>
+</head>
+<body>
+  <div id="grid">
+    <div id="sidebar">
+      <img class="logo" src="logo2.svg" alt="">
+      <span class="slogan">Helper Builder</span>
+      <hr>
+      <div class="form-group">
+        <label for="model">Model</label>
+        <select class="form-control" name="model" id="model">
+          <option value="proposal" selected>Proposal</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="docId">ID</label>
+        <!-- <input class="form-control" type="text" name="docId" id="docId" value="5e5faa45984dce002bf44000"> -->
+        <input class="form-control" type="text" name="docId" id="docId">
+      </div>
+    </div>
+    <pre id="json-renderer"></pre>
+    <div id="viewer">
+      <%- template %>
+    </div>
+  </div>
+  <script src="socket.io.js"></script>
+  <script src="jquery.js"></script> 
+  <script src="jquery.json-viewer.js"></script> 
+  <script src="jquery-resizable.min.js"></script>
+  <script src="resizeSensor.min.js"></script>
+  <script src="main.js" port="<%=port%>" docid="<%=docId%>" doc="<%=doc%>"></script>
+</body>
+</html>

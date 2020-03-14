@@ -1,0 +1,52 @@
+{
+  "name": "nodriza-io-cli",
+  "version": "1.0.0",
+  "description": "nodriza-io-cli",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --watch src src/server.ts",
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "npm run type-check -- --watch",
+    "build:types": "tsc --emitDeclarationOnly",
+    "build:js": "webpack --mode=production",
+    "build": "npm run build:types && npm run build:js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wilmaribg/nodriza-io-cli.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wilmaribg/nodriza-io-cli/issues"
+  },
+  "homepage": "https://github.com/wilmaribg/nodriza-io-cli#readme",
+  "devDependencies": {
+    "@babel/core": "7.8.4",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-object-rest-spread": "7.8.3",
+    "@babel/preset-env": "7.8.4",
+    "@babel/preset-typescript": "7.8.3",
+    "@types/express": "^4.17.3",
+    "@types/express-handlebars": "^3.1.0",
+    "@types/socket.io": "^2.1.4",
+    "axios": "^0.19.2",
+    "babel-loader": "8.0.6",
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "fork-ts-checker-webpack-plugin": "4.0.4",
+    "handlebars": "^4.7.3",
+    "https": "^1.0.0",
+    "nodemon": "^2.0.2",
+    "nodriza": "git+https://github.com/nodriza-io/nodriza.git",
+    "socket.io": "^2.3.0",
+    "ts-node": "^8.6.2",
+    "typescript": "3.8.2",
+    "webpack": "4.41.6",
+    "webpack-cli": "3.3.11"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0"
+  }
+}
