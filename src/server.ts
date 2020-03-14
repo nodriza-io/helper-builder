@@ -3,8 +3,8 @@ import { Socket } from 'socket.io'
 
 require('dotenv').config()
 
-if (!process.env.ACCOUNT) throw new Error('Account does not valid')
-if (!process.env.API_KEY) throw new Error('ApiKey does not valid')
+if (!process.env.ACCOUNT) throw new Error('Account envairoment does not valid')
+if (!process.env.API_KEY) throw new Error('ApiKey envairoment does not valid')
 
 const Services = require('./services')
 
