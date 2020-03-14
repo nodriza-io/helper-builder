@@ -1,16 +1,17 @@
 import { Request, Response } from 'express'
 import { Socket } from 'socket.io'
 
-require('dotenv').config()
 
 if (!process.env.ACCOUNT) throw new Error('Account envairoment does not valid')
 if (!process.env.API_KEY) throw new Error('ApiKey envairoment does not valid')
 
+const  path = require('path')
+require('dotenv').config({
+  path: path.resolve(__dirname)
+})
 const Services = require('./services')
-
 const Nodriza = require('nodriza')
 const express = require('express')
-const  path = require('path')
 const { PORT = 3003 } = process.env
 const app = express()
 const server = require('http').Server(app)
