@@ -15,8 +15,12 @@ const express = require('express');
 class Server extends Services_1.Services {
     constructor(config) {
         super(config);
+        this.exampleText = 'exampleText';
         const { port } = config;
         this.port = port;
+    }
+    setExampleText(text) {
+        this.exampleText = text;
     }
     start() {
         let reload = true;
@@ -34,7 +38,7 @@ class Server extends Services_1.Services {
         app.get('/', (_req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 let template = yield this.getTemplate();
-                const html = '<div class="nf-html-editor">' + '<div class="trumbowyg-editor viewer"><h1>Wilmar Ibarguen M.</h1></div>';
+                const html = '<div class="nf-html-editor">' + '<div class="trumbowyg-editor viewer"><h1>' + this.exampleText + '</h1></div>';
                 template = template.replace(/<div class="nf-html-editor">/gi, html);
                 const doc = yield this.getDocument();
                 doc === null || doc === void 0 ? true : delete doc.layout;

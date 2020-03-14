@@ -9,11 +9,16 @@ const express = require('express')
 export class Server extends Services {
   
   private port: String
+  private exampleText: String = 'exampleText'
   
   constructor(config: IServer) {
     super(config)
     const { port } = config
     this.port = port
+  }
+
+  setExampleText (text: String) {
+    this.exampleText = text
   }
 
   start () {
@@ -31,7 +36,7 @@ export class Server extends Services {
     app.get('/', async (_req: Request, res: Response) => {
       try {
         let template: String = await this.getTemplate()
-        const html: any = '<div class="nf-html-editor">' + '<div class="trumbowyg-editor viewer"><h1>Wilmar Ibarguen M.</h1></div>'
+        const html: any = '<div class="nf-html-editor">' + '<div class="trumbowyg-editor viewer"><h1>'+this.exampleText+'</h1></div>'
         template = template.replace(/<div class="nf-html-editor">/gi, html)
         const doc: any = await this.getDocument()
         delete doc?.layout
