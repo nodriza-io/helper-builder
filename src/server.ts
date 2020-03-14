@@ -47,6 +47,11 @@ app.get('/', async (req: Request, res: Response) => {
   }
 })
 
-server.listen(PORT, () => {
-  console.log('server started at http://localhost:'+PORT);
-})
+module.exports = {
+  serve () {
+    server.listen(PORT, () => {
+      console.log('server started at http://localhost:'+PORT);
+    })
+  }
+}
+

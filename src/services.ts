@@ -1,6 +1,6 @@
 const axios = require('axios')
 
-interface IConstructor {
+interface IServices {
   sdk: any 
 }
 
@@ -8,7 +8,7 @@ class Services {
   
   private Sdk: any
 
-  constructor (config: IConstructor) {
+  constructor (config: IServices) {
     this.Sdk = config.sdk
   }
 
