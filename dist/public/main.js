@@ -10,7 +10,13 @@ var urlModel = url.searchParams.get('model')
 var jsonWidth = $('#json-renderer').width()
 
 socket.on('reload', function () {
-  window.location.reload()
+  fetch(window.location.href).then(response => response.text()).then(html => {
+    var selector = 'div#grid #viewer'
+    $(selector).empty()
+    var parser = new DOMParser()
+    var doc = parser.parseFromString(html, 'text/html')
+    $(selector).append(doc.querySelector(selector).innerHTML)
+  })
 })
 
 if (urlDocId) {

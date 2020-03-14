@@ -1,4 +1,5 @@
-const Server = require('./server')
+require('dotenv').config()
+const Server = require('./server').Server
 
 const server = new Server({ 
   apiKey: process.env.API_KEY || '', 

@@ -4,6 +4,7 @@
   "description": "nodriza-io-cli",
   "main": "dist/server.js",
   "scripts": {
+    "dev": "nodemon --watch src/index.ts --exec 'npm run build && node dist/index.js'",
     "build": "npm run copy-static-assets && npm run build-ts",
     "build-ts": "tsc",
     "copy-static-assets": "ts-node copyStaticAssets.ts"

@@ -7,6 +7,8 @@ class Services {
         this.account = config.account;
         this.model = config.model;
         this.defaultDocId = config.defaultDocId;
+        if (this.account)
+            this.account += '.nodriza.io';
         this.Sdk = new Nodriza({ hostname: this.account, accessToken: config.apiKey });
     }
     getTemplate() {
@@ -15,10 +17,7 @@ class Services {
             axios(url).then((response) => {
                 resolve(response.data);
             }).catch((err) => {
-                if (err.response)
-                    reject(err.response.data);
-                else
-                    reject(err);
+                reject(JSON.stringify(err));
             });
         });
     }
