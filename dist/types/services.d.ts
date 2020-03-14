@@ -1,10 +1,10 @@
-declare const axios: any;
-interface IServices {
-    sdk: any;
-}
-declare class Services {
+import { IServer } from "./interfaces/Iserver";
+export declare class Services {
     private Sdk;
-    constructor(config: IServices);
-    getTemplate(account: String, id: String, model: String): any;
-    getDocument(model: String | any, id: String): Promise<unknown>;
+    protected model: String | any;
+    protected account: String;
+    protected defaultDocId: String;
+    constructor(config: IServer);
+    getTemplate(): any;
+    getDocument(): Promise<unknown>;
 }

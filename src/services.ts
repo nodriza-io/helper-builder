@@ -1,20 +1,25 @@
+import { IServer } from "./interfaces/Iserver"
+
+const Nodriza = require('nodriza')
 const axios = require('axios')
 
-interface IServices {
-  sdk: any 
-}
-
-class Services {
+export class Services {
   
   private Sdk: any
+  protected model: String|any
+  protected account: String
+  protected defaultDocId: String
 
-  constructor (config: IServices) {
-    this.Sdk = config.sdk
+  constructor (config: IServer) {
+    this.account = config.account
+    this.model = config.model
+    this.defaultDocId = config.defaultDocId
+    this.Sdk = new Nodriza ({ hostname: this.account, accessToken: config.apiKey })
   }
 
-  getTemplate (account: String, id: String, model: String): any {
+  getTemplate (): any {
     return new Promise((resolve: Function, reject: Function) => {
-      const url = `https://${account}/v1/document/${model}/${id}/html?source=none&rand=${new Date().getTime()}`
+      const url = `https://${this.account}/v1/document/${this.model}/${this.defaultDocId}/html?source=none&rand=${new Date().getTime()}`
       axios(url).then((response: any) => {
         resolve(response.data)
       }).catch((err: any) => {
@@ -23,9 +28,9 @@ class Services {
     })
   }
   
-  getDocument (model: String|any, id: String) {
+  getDocument () {
       return new Promise((resolve: Function, reject: Function) => {
-        this.Sdk.api[model]?.findOne(id, (err: any, doc: any) => {
+        this.Sdk.api[this.model]?.findOne(this.defaultDocId, (err: any, doc: any) => {
           if (err) return reject(err)
           resolve(doc)
         }) 
@@ -33,6 +38,3 @@ class Services {
   }
 
 }
-
-
-module.exports = Services

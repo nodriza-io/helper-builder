@@ -1,4 +1,2 @@
-declare const _default: {
-    server: any;
-};
-export default _default;
+declare const Server: any;
+declare const server: any;
