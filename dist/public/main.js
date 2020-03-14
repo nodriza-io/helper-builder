@@ -11,7 +11,7 @@ var jsonWidth = $('#json-renderer').width()
 
 socket.on('reload', function () {
   fetch(window.location.href).then(response => response.text()).then(html => {
-    var selector = 'div#grid #viewer'
+    var selector = 'div#grid #viewer .trumbowyg-editor.viewer'
     $(selector).empty()
     var parser = new DOMParser()
     var doc = parser.parseFromString(html, 'text/html')
