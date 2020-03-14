@@ -15,7 +15,10 @@ class Services {
             axios(url).then((response) => {
                 resolve(response.data);
             }).catch((err) => {
-                reject(err.response.data);
+                if (err.response)
+                    reject(err.response.data);
+                else
+                    reject(err);
             });
         });
     }

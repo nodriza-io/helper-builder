@@ -23,7 +23,8 @@ export class Services {
       axios(url).then((response: any) => {
         resolve(response.data)
       }).catch((err: any) => {
-        reject(err.response.data)
+        if (err.response) reject(err.response.data)
+        else reject(err)
       })
     })
   }
