@@ -1,4 +1,3 @@
-import { Request, Response } from 'express'
 import { Socket } from 'socket.io'
 import { IServer } from './interfaces/Iserver'
 import { Services } from './Services'
@@ -28,7 +27,7 @@ export class Server extends Services {
       if (reload) socket.emit('reload')
       reload = false 
     })
-    app.get('/', async (_req: Request, res: Response) => {
+    app.get('/', async (_req: any, res: any) => {
       try {
         let template: String = await this.getTemplate()
         const html: any = '<div class="nf-html-editor">' + '<div class="trumbowyg-editor viewer"><h1>Wilmar Ibarguen</h1></div>'
