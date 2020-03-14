@@ -102,12 +102,12 @@
     <div id="viewer">
       <%- template %>
     </div>
+    <script src="socket.io.js"></script>
+    <script src="jquery.js"></script> 
+    <script src="jquery.json-viewer.js"></script> 
+    <script src="jquery-resizable.min.js"></script>
+    <script src="resizeSensor.min.js"></script>
+    <script src="main.js" port="<%=port%>" docid="<%=docId%>" doc="<%=doc%>"></script>
   </div>
-  <script src="socket.io.js"></script>
-  <script src="jquery.js"></script> 
-  <script src="jquery.json-viewer.js"></script> 
-  <script src="jquery-resizable.min.js"></script>
-  <script src="resizeSensor.min.js"></script>
-  <script src="main.js" port="<%=port%>" docid="<%=docId%>" doc="<%=doc%>"></script>
 </body>
 </html>
