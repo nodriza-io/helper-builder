@@ -28,4 +28,6 @@ module.exports = {
     net: 'empty',
   },
 
+  devtool: 'source-map'
+
 };
