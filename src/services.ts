@@ -18,7 +18,7 @@ export class Services {
     this.Sdk = new Nodriza ({ hostname: this.account, accessToken: config.apiKey })
   }
 
-  getTemplate (): any {
+  protected getTemplate (): any {
     return new Promise((resolve: Function, reject: Function) => {
       const url = `https://${this.account}/v1/document/${this.model}/${this.defaultDocId}/html?source=none&rand=${new Date().getTime()}`
       axios(url).then((response: any) => {
@@ -29,7 +29,7 @@ export class Services {
     })
   }
   
-  getDocument () {
+  protected getDocument () {
       return new Promise((resolve: Function, reject: Function) => {
         this.Sdk.api[this.model]?.findOne(this.defaultDocId, (err: any, doc: any) => {
           if (err) return reject(err)

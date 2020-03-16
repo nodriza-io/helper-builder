@@ -1,12 +1,9 @@
-require('dotenv').config()
-const Server = require('./server').Server
+import Server from '.server'
 
-const server = new Server({ 
-  apiKey: process.env.API_KEY || '', 
-  account: process.env.ACCOUNT || '', 
-  port: process.env.PORT || '3000', 
-  model: process.env.PORT || 'proposal', 
-  defaultDocId: process.env.DOC_ID || '' 
-})
+export class Builder extends Server {
+  
+  constructor (config) {
+    super(config)
+  }
 
-server.start()
+}
