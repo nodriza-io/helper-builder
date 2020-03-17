@@ -1,7 +1,7 @@
 <template>
 	<div class="iframe-container">
-    <div v-if="isLoading" class="loading">
-      <v-progress-linear height="10" indeterminate></v-progress-linear>
+    <div class="loading">
+      <v-progress-linear v-if="isLoading" height="10" indeterminate></v-progress-linear>
     </div>
     <iframe ref="iframe" src="" class="iframe-el" frameborder="0"></iframe> 
   </div>
@@ -13,6 +13,7 @@ import { mapActions, mapState } from 'vuex'
 export default {
   computed: {
     ...mapState({
+      helperUsage: state => state?.currentHelper?.usage,
       helperName: state => state?.currentHelper?.name
     })
   },
@@ -22,16 +23,18 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['getTemplate']),
+    ...mapActions(['getTemplate', 'copyToClipboard']),
     async load (showLoading = true) {
       if (showLoading) this.isLoading = true
       try {
         const url = `/helper/${this.helperName}`
         const template = await this.getTemplate(url)
-        this.$refs.iframe.src = template
-        this.$refs.iframe.onload = () => {
-          if (showLoading) this.isLoading = false
-        }
+        if (this.$refs?.iframe?.src) {
+          this.$refs.iframe.src = template
+          this.$refs.iframe.onload = () => {
+            if (showLoading) this.isLoading = false
+          }
+        } 
       } catch (err) {
         if (showLoading) this.isLoading = false
         console.log(err)
@@ -53,16 +56,15 @@ export default {
 <style scoped lang="scss">
   .iframe-container {
     width: 1168px;
+    overflow: auto;
     .loading {
-      position: fixed;
-      background: rgba(225, 225, 225, 0.9);
-      width: inherit;
-      height: calc(100vh - 64px - 24px);
-      z-index: 111;
+      height: 10px;
     }
     .iframe-el {
       width: 100%;
-      height: calc(100vh - 64px - 24px);
+      background-color: #fafafa;
+      min-width: 1168px;
+      height: calc(100vh - 100px);
     }
   }
 </style>

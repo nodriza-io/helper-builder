@@ -12,8 +12,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const handlebars_1 = __importDefault(require("handlebars"));
 const Services_1 = require("./Services");
+const handlebars_1 = __importDefault(require("handlebars"));
 const path = require('path');
 const cors = require('cors');
 const express = require('express');
@@ -22,40 +22,41 @@ class Server extends Services_1.Services {
     constructor(config) {
         super(config);
         this.helperOptions = [];
-        this.exampleText = 'exampleText';
-        const { port } = config;
-        this.port = port;
+        this.isReloadAdllPage = false;
+        const { port, model } = config;
+        this.model = model || 'proposal';
+        this.port = port || 3000;
+        this.handlebars = handlebars_1.default;
     }
-    // @override
     registerHelper(name, helper, options) {
-        handlebars_1.default.registerHelper(name, helper);
+        const self = this;
+        this.handlebars.registerHelper(name, helper);
         let argsDefinition = {};
         let description = 'Description does not available';
         if (options === null || options === void 0 ? void 0 : options.description)
             description = options.description;
         if (options === null || options === void 0 ? void 0 : options.argsDefinition)
             argsDefinition = options.argsDefinition;
-        this.helperOptions.push({ helperName: name, description, argsDefinition });
+        self.helperOptions.push({ helperName: name, description, argsDefinition, context: {} });
     }
-    // @override
     getHelpers() {
-        return Object.keys(handlebars_1.default.helpers).filter(helper => {
+        return Object.keys(this.handlebars.helpers)
+            .filter(helper => {
             return /^custom.*$/gi.test(helper);
-        }).sort().map(helper => {
-            const helperFcn = handlebars_1.default.helpers[helper];
-            const params = getFunctionArgs(helperFcn).map((param) => {
-                const params = param.split('=');
-                let helperParam = params[1] ? params[1] : params[0];
-                return helperParam.replace(/["'`]/g, '').trim();
-            });
+        })
+            .sort()
+            .map(helper => {
+            const helperFcn = this.handlebars.helpers[helper];
+            let params = getFunctionArgs(helperFcn);
+            params = (params[0] ? params[0] : '').replace(/^.*?=/g, '').trim().slice(1, -1);
             return {
                 name: helper,
-                helper: helperFcn,
+                helper: helperFcn.bind(this),
                 description: this.getHelperOptions(helper).description,
                 argsDefinition: this.getHelperOptions(helper).argsDefinition,
                 func: helperFcn.toString(),
                 params: params,
-                usage: `{{{ ${helper} ${params.map((p) => `"${p}"`).join(' ')} }}}`,
+                usage: '{{{' + helper + ' ' + params + '}}}',
             };
         });
     }
@@ -64,7 +65,7 @@ class Server extends Services_1.Services {
         return description.pop();
     }
     buildHelperBlock(name, params) {
-        return `<div data-helper="${name}">{{{${name} ${params.join(' ')}}}}</div>`;
+        return `<div data-helper="${name}">{{{${name} ${params}}}}</div>`;
     }
     getGelpersBlock() {
         return this.getHelpers().map(helper => {
@@ -74,7 +75,7 @@ class Server extends Services_1.Services {
     getGelperBlock(helperName) {
         return this.getHelpers().filter(h => h.name === helperName).map(helper => {
             return this.buildHelperBlock(helper.name, helper.params);
-        }).join('');
+        })[0];
     }
     responseTemplate(res, template, doc) {
         res.render('index.html', {
@@ -84,26 +85,26 @@ class Server extends Services_1.Services {
             docId: this.defaultDocId,
             helpers: JSON.stringify(this.getHelpers().map(helper => {
                 const func = helper.helper.toString();
-                const usage = `{{{ ${helper.name} ${helper.params.map((p) => `"${p}"`).join(' ')} }}}`;
+                const usage = `{{{ ${helper.name} ${helper.params} }}`;
                 return Object.assign(helper, { func, usage });
             })),
         });
     }
     getCompile(doc, template) {
-        return handlebars_1.default.compile(handlebars_1.default.compile(template)({}))(doc);
+        return this.handlebars.compile(this.handlebars.compile(template)(doc))(doc);
     }
     setReloadAddPage(val) {
         this.isReloadAdllPage = val;
     }
-    start() {
+    serverStart() {
         let reload = true;
         const app = express();
         const server = require('http').Server(app);
         const io = require('socket.io')(server);
-        app.set('views', __dirname);
+        app.set('views', path.join(__dirname, '..'));
         app.engine('html', require('ejs').renderFile);
         app.use(cors());
-        app.use(express.static(path.join(__dirname, 'app')));
+        app.use(express.static(path.join(__dirname, '..', 'app')));
         io.on('connection', (socket) => {
             if (reload)
                 socket.emit(this.isReloadAdllPage ? 'reload-all' : 'reload');
@@ -138,7 +139,9 @@ class Server extends Services_1.Services {
                 doc === null || doc === void 0 ? true : delete doc.content;
                 const replace = `
           <div class="nf-html-editor">
-            <div class="trumbowyg-editor viewer">${this.getGelperBlock(helper)}</div>
+            <div class="trumbowyg-editor viewer">
+              ${this.getGelperBlock(helper)}
+            </div>
         `;
                 template = template.replace(/<div class="nf-html-editor">/gi, replace);
                 template = this.getCompile(doc, template);
@@ -152,22 +155,10 @@ class Server extends Services_1.Services {
         app.get('/', (_req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 res.render('app/index.html', {});
-                // let template:string = await this.getTemplate()
-                // const doc: any = await this.getDocument()
-                // delete doc?.layout
-                // delete doc?.content
-                // const replace = `
-                //   <div class="nf-html-editor">
-                //     <div class="trumbowyg-editor viewer">${this.getGelpersBlock()}</div>
-                // `
-                // template = template.replace(/<div class="nf-html-editor">/gi, replace)
-                // template = this.getCompile(doc, template)
-                // this.responseTemplate(res, template, doc)
             }
             catch (err) {
                 console.log(err);
                 res.status(500).send(err);
-                // this.responseTemplate(res, err, {})
             }
         }));
         server.listen(this.port, () => {

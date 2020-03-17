@@ -3,12 +3,13 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-const port = window.location.port
+const port = process.env.NODE_ENV === "development" ? 3000 : window.location.port
 const baseUrl = `//${window.location.hostname}:${port}`
 const getUrl = (url) => baseUrl + url
 
 export default new Vuex.Store({
   state: {
+    port,
     currentHelper: {}
   },
   mutations: {
@@ -18,7 +19,7 @@ export default new Vuex.Store({
   },
   actions: {
     showError (err) {
-      console.log(err)
+      console.error('Nodriza Builder (ERROR)', err)
       Vue.$toast.error(err)
     },
     copyToClipboard (context, data) {

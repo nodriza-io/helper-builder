@@ -19,7 +19,10 @@ import vuetify from './plugins/vuetify';
 VueClipboard.config.autoSetContainer = true
 
 Vue.config.productionTip = false
-Vue.use(VueToast)
+Vue.use(VueToast, { 
+  position: 'top-right',
+  queue: false,
+})
 Vue.use(VueClipboard)
 Vue.component('JsonViewer', JsonViewer)
 Vue.component('Explaniation', Explaniation)
@@ -35,12 +38,9 @@ new Vue({
   vuetify,
   render: h => h(AppMain),
   mounted () {
-    const socket = io(`http://localhost:${window.location.port}`);
-    socket.on('connect', () => {
-      console.log('socket connect --->')
-    })
+    const socket = io(`http://localhost:${this.$store?.state?.port}`);
+    socket.on('connect', () => {})
     socket.on('reload', () => {
-      console.log('socket reload --->')
       this.$emitter.emit('reload')
     })
 

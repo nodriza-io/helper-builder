@@ -1,5 +1,5 @@
 <template>
-  <v-list>
+  <v-list class="list">
     <v-subheader>
       CUSTOM HELPERS
       <v-spacer/>
@@ -7,18 +7,23 @@
         <v-icon v-text="'mdi-magnify'"></v-icon>
       </v-btn>
     </v-subheader>
-    <v-list-item-group v-model="helper" color="primary">
+    <v-list-item-group v-model="helper">
       <v-list-item 
         v-for="helper in helpers" 
         :key="helper.name"
         :class="{'v-list-item--active': helper.name === $route.params.helper}"
         @click="showHelper(helper)">
-        <v-list-item-icon>
+        <!-- <v-list-item-icon>
           <v-icon v-text="'mdi-code-tags'"></v-icon>
-        </v-list-item-icon>
+        </v-list-item-icon> -->
         <v-list-item-content>
           <v-list-item-title v-text="helper.name"/>
         </v-list-item-content>
+        <v-list-item-icon>
+          <v-btn icon @click.stop="copyToClipboard(helper.usage)">
+            <v-icon>mdi-content-copy</v-icon>
+          </v-btn>
+        </v-list-item-icon>
       </v-list-item>
     </v-list-item-group>
     <template >
@@ -38,7 +43,7 @@ export default {
   },
   methods: {
     ...mapMutations(['setCurrentHelper']),
-    ...mapActions(['getHelpers', 'showError']),
+    ...mapActions(['getHelpers', 'showError', 'copyToClipboard']),
     showHelper (helper) {
       this.helper = helper
       this.setCurrentHelper(JSON.parse(JSON.stringify(helper)))
@@ -68,12 +73,8 @@ export default {
 </script>
 
 <style scoped>
-  .img-logo {
-    display: block;
-    width: 80%;
-    margin: auto;
-    margin-bottom: 12px;
-    margin-top: 12px;
-  }
+  .list {
+    background: inherit !important;
+  }   
 </style>
 

@@ -1,17 +1,19 @@
 <template>
   <v-app id="inspire">
 
-    <v-app-bar app clipped-right color="primary" dark>
-      <v-toolbar-title>{{ currentHelperName }}</v-toolbar-title>
-      <v-spacer />
-      <v-btn icon @click.stop="right = !right">
-        <v-icon>mdi-account-question-outline</v-icon>
-      </v-btn>
-    </v-app-bar>
-
-    <v-navigation-drawer permanent v-model="drawer" app>
+    <v-navigation-drawer v-model="drawer" app left clipped>
       <SidebarDrawer />
     </v-navigation-drawer>
+
+    <v-app-bar app clipped-left clipped-right>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <v-toolbar-title>Nodriza Helper Builder</v-toolbar-title>
+      <v-spacer />
+      <v-switch hide-details v-model="isDark" label="Dark Theme" class="mr-3"/>
+      <v-btn text @click.stop="right = !right">
+        <v-icon left>mdi-code-braces</v-icon> {{ right ? 'Close' : 'View' }} Source
+      </v-btn>
+    </v-app-bar>
 
     <v-content>
       <v-container class="fill-height" fluid>
@@ -19,7 +21,7 @@
       </v-container>
     </v-content>
 
-    <v-navigation-drawer v-model="right" :width="1024" color="primary" fixed right temporary>
+    <v-navigation-drawer v-model="right" width="500" app right clipped>
       <InformationDrawer @onClose="right = !right" />
     </v-navigation-drawer>
 
@@ -32,6 +34,12 @@
     props: {
       source: String,
     },
+    watch: {
+      isDark (value) {
+        window.localStorage.setItem('dark-teme', value)
+        this.setTheme(value)
+      }
+    },
     computed: {
       ...mapState({
         currentHelperName: state => state?.currentHelper.name
@@ -39,10 +47,20 @@
     },
     data: () => ({
       drawer: null,
+      isDark: Boolean(eval(window.localStorage.getItem('dark-teme'))) ,
       drawerRight: null,
-      right: false,
+      right: true,
       left: false,
     }),
+    methods: {
+      setTheme (isDark) {
+        this.$vuetify.theme.dark = isDark
+        this.$vuetify.theme.ligth = !isDark
+      }
+    },
+    mounted () {
+      this.setTheme(this.isDark)
+    }
   }
 </script>
 

@@ -1,4 +1,4 @@
-import { IServer } from "./interfaces/Iserver"
+import { IServer } from "./types"
 
 const Nodriza = require('nodriza')
 const axios = require('axios')

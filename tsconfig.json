@@ -1,25 +1,27 @@
 {
   "compilerOptions": {
-      "module": "commonjs",
-      "esModuleInterop": true,
-      "allowSyntheticDefaultImports": true,
-      "target": "es6",
-      "noImplicitAny": true,
-      "moduleResolution": "node",
-      "sourceMap": true,
-      "outDir": "dist",
-      "baseUrl": ".",
-      "paths": {
-        "*": [
-            "node_modules/*",
-            "src/types/*"
-        ]
-      }
+    "outDir": "./dist",
+    "target": "es6",
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "allowSyntheticDefaultImports": true,
+    "strict": true, 
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "*": [
+          "node_modules/*",
+          "src/*"
+      ]
+    }
   },
   "exclude": [
-    "node_modules"
-  ],
-  "include": [
-      "src/**/*"
+    "node_modules",
+    "dist",
+    "test"
   ]
 }

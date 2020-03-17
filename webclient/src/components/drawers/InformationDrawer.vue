@@ -1,6 +1,13 @@
 <template>
-  <v-card>
-    <v-toolbar color ="primary" dark>
+  <v-container fluid>
+    <v-row>
+      <v-col style="padding-top: 0; padding-bottom: 0;">
+        <JsonViewer />
+      </v-col>
+    </v-row>
+  </v-container>
+  <!-- <v-card>
+    <v-toolbar>
       <v-toolbar-title>
         <v-icon left>mdi-account-question-outline</v-icon>
         User Information
@@ -24,7 +31,6 @@
           <v-container fluid>
             <v-row>
               <v-col style="padding-top: 0; padding-bottom: 0;">
-                <JsonViewer />
               </v-col>
             </v-row>
           </v-container>
@@ -42,5 +48,5 @@
         </v-card>
       </v-tab-item>
     </v-tabs>
-  </v-card>
+  </v-card> -->
 </template>
