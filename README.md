@@ -1,4 +1,4 @@
-# Helper Builder
+# Nodriza Helper Builder
 HandlebarsJS playground with Nodriza template appearance
 
 ## Usage
