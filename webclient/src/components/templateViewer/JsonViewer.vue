@@ -35,7 +35,7 @@ export default {
     },
     async load () {
       try {
-        const json = await this.getJson('/doc/json')
+        const json = await this.getJson()
         this.jsonData = json
       } catch (err) {
         this.showError(err)

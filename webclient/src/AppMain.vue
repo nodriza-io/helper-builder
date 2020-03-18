@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-
+    <PageLoading />
     <v-navigation-drawer v-model="drawer" app left clipped>
       <SidebarDrawer />
     </v-navigation-drawer>
@@ -9,6 +9,9 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title>Nodriza Helper Builder</v-toolbar-title>
       <v-spacer />
+      <v-btn text class="mr-3" @click.native="doExport">
+        <v-icon left>mdi-cloud-upload-outline</v-icon> Export
+      </v-btn>
       <v-switch hide-details v-model="isDark" label="Dark Theme" class="mr-3"/>
       <v-btn text @click.stop="right = !right">
         <v-icon left>mdi-code-braces</v-icon> {{ right ? 'Close' : 'View' }} Source
@@ -29,7 +32,7 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
+  import { mapState, mapActions } from 'vuex'
   export default {
     props: {
       source: String,
@@ -53,6 +56,17 @@
       left: false,
     }),
     methods: {
+      ...mapActions(['exportHelpers', 'exportHelpers', 'showError']),
+      async doExport () {
+        try {
+          const res = await this.exportHelpers()
+          const updates = res?.filter(doc => doc?.updated).length
+          const creates = res?.filter(doc => doc?.created).length
+          this.$toast.info(`'${creates}' Custom Helpers Created \n'${updates}' Custom Helpers Updated.`)
+        } catch (err) {
+          this.showError(err)
+        }
+      },
       setTheme (isDark) {
         this.$vuetify.theme.dark = isDark
         this.$vuetify.theme.ligth = !isDark

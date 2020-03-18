@@ -140,7 +140,7 @@ export class Server extends Services implements IHelper {
     })
     app.get('/helper/:helper', async (_req: Request, res: Response) => {
       try {
-        let template:string = await this.getTemplate()
+        let template:any = await this.getTemplate()
         const doc: any = await this.getDocument()
         const helper:string = _req?.params?.helper
         delete doc?.layout
@@ -157,6 +157,13 @@ export class Server extends Services implements IHelper {
       } catch (err) {
         console.log(err)
         this.responseTemplate(res, err, {})
+      }
+    })
+    app.post('/helpers/export', async (_req: Request, res: Response) => {
+      try {
+        res.json(await this.exportHelpers(this.getHelpers()))
+      } catch (err) {
+        res.status(400).send(err)
       }
     })
     app.get('/', async (_req: Request, res: Response) => {

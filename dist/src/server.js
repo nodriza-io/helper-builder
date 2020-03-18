@@ -152,6 +152,14 @@ class Server extends Services_1.Services {
                 this.responseTemplate(res, err, {});
             }
         }));
+        app.post('/helpers/export', (_req, res) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                res.json(yield this.exportHelpers(this.getHelpers()));
+            }
+            catch (err) {
+                res.status(400).send(err);
+            }
+        }));
         app.get('/', (_req, res) => __awaiter(this, void 0, void 0, function* () {
             try {
                 res.render('app/index.html', {});

@@ -53,7 +53,7 @@ export default {
     async load () {
       try {
         this.helpers = []
-        const res = await this.getHelpers('/helpers')
+        const res = await this.getHelpers()
         res.map(helper => this.helpers.push(helper))
         const routeHelper = this.$route?.params?.helper
         if (routeHelper) this.showHelper(this.helpers.filter(h => h.name === routeHelper).pop())

@@ -15,12 +15,15 @@ export default new Vuex.Store({
   mutations: {
     setCurrentHelper (state, helper) {
       state.currentHelper = helper
+    },
+    setLoading (state, value) {
+      state.loading = value
     }
   },
   actions: {
     showError (err) {
       console.error('Nodriza Builder (ERROR)', err)
-      Vue.$toast.error(err)
+      Vue.prototype.$toast.error(err.toString())
     },
     copyToClipboard (context, data) {
       Vue.prototype.$copyText(data).then(function () {
@@ -38,18 +41,32 @@ export default new Vuex.Store({
         })
       })
     },
-    getJson (context, url) {
+    exportHelpers (context) {
       return new Promise((resolve, reject) => {
-        fetch(getUrl(url)).then(response => {
+        context.commit('setLoading', true)
+        fetch(getUrl('/helpers/export'), { method: 'POST' }).then(response => {
+          response.json().then(json => {
+            context.commit('setLoading', false)
+            resolve(json)
+          })
+        }).catch(err => {
+          context.commit('setLoading', false)
+          reject(err)
+        })
+      })
+    },
+    getJson () {
+      return new Promise((resolve, reject) => {
+        fetch(getUrl('/doc/json')).then(response => {
           response.json().then(json => resolve(json))
         }).catch(err => {
           reject(err)
         })
       })
     },
-    getHelpers (context, url) {
+    getHelpers () {
       return new Promise((resolve, reject) => {
-        fetch(getUrl(url)).then(response => {
+        fetch(getUrl('/helpers')).then(response => {
           response.json().then(json => resolve(json))
         }).catch(err => {
           reject(err)
@@ -60,3 +77,4 @@ export default new Vuex.Store({
   modules: {
   }
 })
+

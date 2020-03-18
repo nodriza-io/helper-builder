@@ -50,6 +50,7 @@
     "handlebars": "^4.7.3",
     "https": "^1.0.0",
     "nodriza": "git+https://github.com/nodriza-io/nodriza.git",
+    "query-string": "^6.11.1",
     "socket.io": "^2.3.0"
   }
 }
