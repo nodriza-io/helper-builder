@@ -1,7 +1,7 @@
 {
-  "name": "nodriza-io-cli",
+  "name": "helper-builder",
   "version": "1.0.0",
-  "description": "nodriza-io-cli",
+  "description": "helper-builder",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc --project tsconfig.json && cp src/index.html dist/index.html",
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wilmaribg/nodriza-io-cli.git"
+    "url": "git+https://github.com/nodriza-io/helper-builder.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Wilmar Ibarguen (@wilmaribg)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/wilmaribg/nodriza-io-cli/issues"
+    "url": "https://github.com/nodriza-io/helper-builder/issues"
   },
-  "homepage": "https://github.com/wilmaribg/nodriza-io-cli#readme",
+  "homepage": "https://github.com/nodriza-io/helper-builder#readme",
   "devDependencies": {
     "@babel/core": "7.8.4",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
