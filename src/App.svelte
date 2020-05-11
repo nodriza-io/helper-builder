@@ -52,7 +52,7 @@
 		    <div class="col-12 pl-0 pr-0">
 		    	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 					  <a class="navbar-brand" href="javascript:void(0)">
-					  	<img src="/images/icon.png" width="30" height="30" alt="">
+					  	<img src="./images/icon.png" width="30" height="30" alt="">
 					  </a>
 					  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 					    <ul class="navbar-nav mr-auto">
