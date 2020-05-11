@@ -1,3 +1,5 @@
-/node_modules/
+/node_modules
+/public/ace
+/public/ace/node_modules
 
 .DS_Store
