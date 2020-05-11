@@ -2,7 +2,7 @@
   "name": "svelte-app",
   "version": "1.0.0",
   "scripts": {
-    "build:ace": "node ./ace/Makefile.dryice.js -m --target ./public/ace/build",
+    "build:ace": "node ./ace/Makefile.dryice.js -m --target ./public/ace-editor/build",
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "start": "sirv public"
