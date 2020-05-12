@@ -43,13 +43,16 @@
 
 	function sendData (isSend) {
 		const data = isSend ? editorHandler.getSession().getValue() : null
-		api._onClick(data)
+		if (typeof api.onClick === 'function') window.api.onClick(data)
 	}
 
 	window.api = {
 		_onClick: null,
 		set onClick (value) {
 			this._onClick = value
+		},
+		get onClick () {
+			return this._onClick
 		}
 	}
 </script>
