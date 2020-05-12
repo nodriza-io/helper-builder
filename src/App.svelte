@@ -116,7 +116,7 @@
 			<!-- EDITOR AND VIEWER -->
 		  <div class="row">
 		    <div class="col-6 pl-1 pr-0">
-		      <div id="editor"></div>
+		      <div id="editor" class="app-editor"></div>
 		    </div>
 		    <div class="col-6 pl-1 pr-0">
 		    	<iframe id="viewer" src="{ifrSrc}" frameborder="0"></iframe>
@@ -142,7 +142,7 @@
 		width: 100%;
 		height: calc(100vh - 80px);
 	}
-	#editor { 
+	#editor, .app-editor { 
     position: absolute;
     top: 0px;
     right: 0;
