@@ -23,11 +23,23 @@
 		editorHandler.getSession().setOption('mode', `ace/mode/${_lang}`)
 	}
 
+	// onMount(async function () {
+	// 	if (/https/g.test(docUrl)) await refresh(docUrl, rootId)
+	// 	const initialCode = window.localStorage.getItem(lsCodeKey) || ''
+	// 	editorHandler = editor({ render, lang, lsCodeKey, rootId, docUrl, initialCode })
+	// })
+
 	onMount(async function () {
 		if (/https/g.test(docUrl)) await refresh(docUrl, rootId)
 		const initialCode = window.localStorage.getItem(lsCodeKey) || ''
 		editorHandler = editor({ render, lang, lsCodeKey, rootId, docUrl, initialCode })
 	})
+
+	async function load () {
+		if (/https/g.test(docUrl)) await refresh(docUrl, rootId)
+		const initialCode = window.localStorage.getItem(lsCodeKey) || ''
+		editorHandler = editor({ render, lang, lsCodeKey, rootId, docUrl, initialCode })
+	}
 
 	async function setKeys (url, rootId) {
 		await refresh (url, rootId)
@@ -49,7 +61,8 @@
 	window.api = {
 		_onClick: null,
 		setCode (code) {
-			editorHandler.getSession().setValue(code)
+			window.localStorage.setItem(lsCodeKey, code)
+			load()
 		},
 		set onClick (value) {
 			this._onClick = value
