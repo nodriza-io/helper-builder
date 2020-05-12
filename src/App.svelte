@@ -48,6 +48,9 @@
 
 	window.api = {
 		_onClick: null,
+		setCode (code) {
+			editorHandler.getSession().setValue(code)
+		},
 		set onClick (value) {
 			this._onClick = value
 		},
