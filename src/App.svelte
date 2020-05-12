@@ -40,6 +40,18 @@
 		ifrSrc = await render(url, rootId)
 		return
 	}
+
+	function sendData (isSend) {
+		const data = isSend ? editorHandler.getSession().getValue() : null
+		api._onClick(data)
+	}
+
+	window.api = {
+		_onClick: null,
+		set onClick (value) {
+			this._onClick = value
+		}
+	}
 </script>
 
 
@@ -66,12 +78,12 @@
 					        </div>
 					      </li>
 					    </ul>
-					    <button id="btn-cancel" class="btn btn-danger my-2 my-sm-0" type="button">
+					    <button id="btn-cancel" class="btn btn-danger my-2 my-sm-0" type="button" on:click="{ () => sendData(false) }">
 					    	Cancel
 					    </button>
 					    &nbsp;
 					    &nbsp;
-					    <button id="btn-ok" class="btn btn-primary my-2 my-sm-0" type="button">
+					    <button id="btn-ok" class="btn btn-primary my-2 my-sm-0" type="button" on:click="{ () => sendData(true) }">
 					    	Ok
 					    </button>
 					  </div>
