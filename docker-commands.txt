@@ -1,0 +1,3 @@
+docker image build --label nginx-enable-cors --tag wilmaribg/nginx-enable-cors .
+
+docker image push wilmaribg/nginx-enable-cors 
