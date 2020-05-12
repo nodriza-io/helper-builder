@@ -23,12 +23,6 @@
 		editorHandler.getSession().setOption('mode', `ace/mode/${_lang}`)
 	}
 
-	// onMount(async function () {
-	// 	if (/https/g.test(docUrl)) await refresh(docUrl, rootId)
-	// 	const initialCode = window.localStorage.getItem(lsCodeKey) || ''
-	// 	editorHandler = editor({ render, lang, lsCodeKey, rootId, docUrl, initialCode })
-	// })
-
 	onMount(async function () {
 		if (/https/g.test(docUrl)) await refresh(docUrl, rootId)
 		const initialCode = window.localStorage.getItem(lsCodeKey) || ''

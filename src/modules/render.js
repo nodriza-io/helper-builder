@@ -1,3 +1,5 @@
+import { sumProducts } from './suportFunctions.js'
+
 function showError (err) {
   console.error('[Helper Builder]', err)
 } 
@@ -43,7 +45,7 @@ function buildHelper (rootId, helperName, helperFnc) {
 function evalhelper (helperFnc) {
   try {
     if (!helperFnc) return Function
-    const code = '(() => ' + helperFnc + ')()'
+    const code = '(() => ' + helperFnc + ')(); ' + sumProducts.toString()
     return eval(code)
   } catch (err) {
     showError(err)
